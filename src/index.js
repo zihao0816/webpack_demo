@@ -1,20 +1,10 @@
-import {x} from './a.js'
+
 import './a.css'
 import './b.less'
 require('@babel/polyfill')
-var b= 1
-b++
-class A{
-    c=1
-}
-
-function * gen(){
-    yield 1;
-}
-
-console.log(gen().next())
-console.log(11,A)
-
-console.log(x,'-'+b)
-
-'aaa'.includes('a')
+// import $ from 'jquery'
+import logo from "./img/2.jpg"
+console.lo(12343333333333333333333333333)
+var pic = new Image()
+pic.src =logo
+document.body.appendChild(pic)
