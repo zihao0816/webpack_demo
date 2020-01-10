@@ -7,12 +7,6 @@ const OptimizeCss=require('optimize-css-assets-webpack-plugin')//压缩css
 const TerserPlugin=require('terser-webpack-plugin')//压缩js
 
 module.exports = {
-    optimization:{
-        minimizer:[
-            new TerserPlugin({}),
-            new OptimizeCss({})
-        ]
-    },
     mode:'development',
     entry:path.resolve(__dirname,'src/index.js'),
     output:{
@@ -44,6 +38,8 @@ module.exports = {
             //     collapseWhitespace:true//折叠空行
             // }
         }),
+        new OptimizeCss({}),//压缩css
+        new TerserPlugin({})//压缩js
        
     ],
     module:{
@@ -52,10 +48,24 @@ module.exports = {
                 test:/\.js$/,
                 exclude:/node_modules/,
                 use:{
+                    loader:'eslint-loader',
+                    options:{
+                        enforce:'pre'//pre在普通loader之前，post在普通loader之后
+                    }
+                }
+            },
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                include:path.resolve(__dirname,'src'),
+                use:{
                     loader:'babel-loader',
                     options:{
                         presets:['@babel/preset-env'],
-                        plugins:[]
+                        plugins:[
+                            '@babel/plugin-proposal-class-properties',
+                            "@babel/plugin-transform-runtime",
+                        ]
                     }
                 }
             },
